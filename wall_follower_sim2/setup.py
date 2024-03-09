@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'wall_follower'
+package_name = 'wall_follower_sim2'
 
 setup(
     name=package_name,
