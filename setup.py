@@ -1,10 +1,10 @@
 from setuptools import setup
 
-package_name = 'wall_follower'
+package_name = 'wall_follower_alex'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='1.0.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -13,15 +13,16 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='root',
-    maintainer_email='root@todo.todo',
+    maintainer='racecar_alex',
+    maintainer_email='gonzaya2003a@gmail.com',
     description='TODO: Package description',
-    license='TODO: License declaration',
+    license='MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             "example=wall_follower.example:main",
             "safety_example=wall_follower.safety:main"
+            "wall_follower_alex=wall_follower_alex.wall_follower:main"
         ],
     },
 )
