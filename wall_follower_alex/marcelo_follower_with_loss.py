@@ -94,6 +94,7 @@ class WallFollower(Node):
 
             # Extracting slope and intercept from the best model
             slope, intercept = best_model
+            b = intercept
             # slope, intercept = np.polyfit(xs, ys, 1)
 
             if self.SIDE == 1:
@@ -113,8 +114,9 @@ class WallFollower(Node):
             output_steering_angle = self.PID_controler(errors, current_time)
             velocity = self.VELOCITY * max(0.5, 0.1 + output_steering_angle**2)
             
-        ## calculating loss
-        loss = np.abs(self.DESIRED_DISTANCE - min(y))
+        ## calculating losss
+        distance_to_wall = abs(b)/np.sqrt(1+slope**2)
+        loss = np.abs(self.DESIRED_DISTANCE - distance_to_wall)
         loss_msg = Float32()
         loss_msg.data = loss
         self.loss_array.append(loss)
