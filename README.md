@@ -1,6 +1,10 @@
 # Team 12: RSS SP'24
 General Info for team. As well as notes and ideas for asynchronous work.
 
+## Personal Notes
+ - Had to rename old package to allow it to coexist with wall_follower
+ - Added param and launch files, but still need testing to see if they run
+
 ## Getting started
 1. connect everything: router to power and ethernet, bot to both batteries, laptop to router WiFi.
 2. Power on the bot: Click (don't hold) on the battery bank power button, then on the boards power button.
