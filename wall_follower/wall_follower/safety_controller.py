@@ -45,7 +45,7 @@ class SafetyController(Node):
 
         # Subscribtion 
         self.create_subscription(LaserScan, "/scan", self.laser_callback, 10)
-        self.create_subscription(AckermannDriveStamped, "/vesc/high_level/output", self.drive_callback, 10)
+        self.create_subscription(AckermannDriveStamped, "/vesc/low_level/ackermann_cmd", self.drive_callback, 10)
 
     def laser_callback(self, laser_scan:LaserScan):
         distances = np.array(laser_scan.ranges)

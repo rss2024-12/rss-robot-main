@@ -1,3 +1,5 @@
+import glob
+import os
 from setuptools import setup
 
 package_name = 'wall_follower'
@@ -7,9 +9,10 @@ setup(
     version='0.0.0',
     packages=[package_name],
     data_files=[
+        ('share/'+package_name, ['package.xml', "wall_follower/params.yaml", "wall_follower/params_sim.yaml"]),
         ('share/ament_index/resource_index/packages',
          ['resource/' + package_name]),
-        ('share/' + package_name, ['package.xml']),
+        ('share/wall_follower/launch', glob.glob(os.path.join('launch', '*launch.xml'))),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
