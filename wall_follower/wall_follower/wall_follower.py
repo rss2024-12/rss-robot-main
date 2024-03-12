@@ -27,7 +27,6 @@ class WallFollower(Node):
         # Fetch constants from the ROS parameter server
         self.SCAN_TOPIC = self.get_parameter('scan_topic').get_parameter_value().string_value
         self.DRIVE_TOPIC = self.get_parameter('drive_topic').get_parameter_value().string_value
-        self.DRIVE_TOPIC = '/vesc/input/navigation'
         self.SAFETY_DRIVE_TOPIC = self.get_parameter('safety_drive_topic').get_parameter_value().string_value
         self.SIDE = self.get_parameter('side').get_parameter_value().integer_value
         self.VELOCITY = self.get_parameter('velocity').get_parameter_value().double_value
@@ -67,7 +66,6 @@ class WallFollower(Node):
         self.VELOCITY = self.get_parameter('velocity').get_parameter_value().double_value
         self.DESIRED_DISTANCE = self.get_parameter('desired_distance').get_parameter_value().double_value
         current_time = (laser_scan.header.stamp.nanosec / 1e9)
-        # self.get_logger().info(str(self.VELOCITY))
         num_points = len(laser_scan.ranges)
         distances = np.array(laser_scan.ranges)
         angles = np.linspace(laser_scan.angle_min, laser_scan.angle_max, num_points)
@@ -111,12 +109,12 @@ class WallFollower(Node):
 
             #PID control
             output_steering_angle = self.PID_controler(errors, current_time)
-            velocity = self.VELOCITY * max(0.5, 0.1 + output_steering_angle**2)
+            velocity = self.VELOCITY
             
-        # msg = AckermannDriveStamped()
-        # msg.drive.speed = 1.0
-        # msg.drive.steering_angle = float(0)
-        # self.drive_input_publisher.publish(msg)
+        msg = AckermannDriveStamped()
+        msg.drive.speed = velocity
+        msg.drive.steering_angle = output_steering_angle
+        self.drive_input_publisher.publish(msg)
 
     def PID_controler(self, error, curr_time):
 
@@ -146,8 +144,7 @@ class WallFollower(Node):
         if return_value > 0.34:
             return_value = 0.34
         
-        # self.get_logger().info(f'PD: {Kp_dist*error[0]} PS:{Kp_slope*error[1]} DD:{Kd_dist*de_dt_dist} DS:{Kd_slope*de_dt_slope}')
-        # self.get_logger().info(f'{return_value}')
+        self.get_logger().info(f'{return_value}')
         return (Kp_dist*error[0] + Kp_slope*error[1] + Kd_dist*de_dt_dist + Kd_slope*de_dt_slope)/2
 
     
